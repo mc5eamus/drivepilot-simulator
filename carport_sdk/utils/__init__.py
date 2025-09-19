@@ -8,7 +8,7 @@ from .time_utils import get_timestamp, format_duration
 
 __all__ = [
     "setup_logger",
-    "get_logger", 
+    "get_logger",
     "validate_coordinates",
     "validate_speed",
     "get_timestamp",

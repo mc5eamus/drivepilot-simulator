@@ -9,7 +9,7 @@ from .models import VehicleState, SensorData, DriverState, ObstacleData, AlertDa
 __all__ = [
     "CarPortSimulator",
     "Event",
-    "EventBus", 
+    "EventBus",
     "VehicleState",
     "SensorData",
     "DriverState",

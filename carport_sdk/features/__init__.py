@@ -10,7 +10,7 @@ from .regulatory_mode import RegulatoryModeSimulator
 
 __all__ = [
     "DriverMonitoringSimulator",
-    "SpeedLimitingSimulator", 
+    "SpeedLimitingSimulator",
     "OTAUpdateSimulator",
     "ObstacleDetectionSimulator",
     "RegulatoryModeSimulator",

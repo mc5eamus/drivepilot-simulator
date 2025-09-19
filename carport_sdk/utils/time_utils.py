@@ -15,10 +15,10 @@ def get_timestamp() -> datetime:
 def format_duration(seconds: float) -> str:
     """
     Format duration in a human-readable format.
-    
+
     Args:
         seconds: Duration in seconds
-        
+
     Returns:
         Formatted duration string
     """
@@ -35,10 +35,10 @@ def format_duration(seconds: float) -> str:
 def time_since(timestamp: datetime) -> float:
     """
     Calculate time elapsed since a timestamp.
-    
+
     Args:
         timestamp: Starting timestamp
-        
+
     Returns:
         Elapsed time in seconds
     """
@@ -48,7 +48,7 @@ def time_since(timestamp: datetime) -> float:
 def sleep_ms(milliseconds: int):
     """
     Sleep for specified milliseconds.
-    
+
     Args:
         milliseconds: Sleep duration in milliseconds
     """

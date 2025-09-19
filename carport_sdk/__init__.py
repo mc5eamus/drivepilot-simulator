@@ -15,7 +15,7 @@ from .core.models import VehicleState, SensorData
 
 __all__ = [
     "CarPortSimulator",
-    "Event", 
+    "Event",
     "EventBus",
     "VehicleState",
     "SensorData",
