@@ -1,131 +1,179 @@
-# DrivePilot Simulator Documentation Repository
+# CarPort SDK - Automotive Simulator Repository
 
 **ALWAYS follow these instructions first and only search for additional context if the information provided here is incomplete or found to be in error.**
 
-This is a minimal documentation-only repository for the Drive Pilot automotive project. It contains project meeting transcripts and documentation related to autonomous driving features including driver monitoring, adaptive speed limiting, OTA updates, obstacle detection, and regulatory compliance.
+This repository hosts the CarPort SDK, a Python-based automotive simulator designed for testing and validating autonomous driving features. The SDK provides simulation capabilities for driver monitoring, adaptive speed limiting, OTA updates, obstacle detection, and regulatory compliance based on the Drive Pilot project requirements.
 
 ## Repository Structure
 
 **VALIDATED REPOSITORY CONTENTS:**
 ```
 drivepilot-simulator/
-├── .gitignore          # Python-focused gitignore with general exclusions
+├── .gitignore              # Python-focused gitignore with development exclusions
 ├── .github/
 │   └── copilot-instructions.md  # This file
-└── content/
-    └── transcript.md   # OEMagic Teams call transcript for Drive Pilot project
+├── content/
+│   └── transcript.md       # OEMagic Teams call transcript for Drive Pilot project (reference)
+├── carport_sdk/            # Main SDK package
+│   ├── __init__.py
+│   ├── core/               # Core simulation components
+│   ├── features/           # Feature-specific simulators
+│   └── utils/              # Utility functions
+├── tests/                  # Test suite
+├── examples/               # Usage examples
+├── docs/                   # Documentation
+├── requirements.txt        # Python dependencies
+├── setup.py               # Package installation
+└── README.md              # Project overview and usage
 ```
 
 ## Working Effectively
 
 ### Prerequisites
-- **NO BUILD SYSTEM**: This repository contains no source code, build scripts, or dependencies
-- **NO INSTALLATION REQUIRED**: No SDKs, compilers, or runtime environments needed
-- **TEXT EDITING ONLY**: Standard text editor or IDE sufficient for working with markdown files
+- **Python 3.8+**: Required for running the CarPort SDK
+- **Virtual Environment**: Recommended for isolated development (venv, conda, etc.)
+- **pip**: For installing dependencies from requirements.txt
+- **pytest**: For running the test suite (installed via requirements.txt)
 
 ### Key Project Information
-Based on `content/transcript.md`, this repository documents a Drive Pilot autonomous vehicle project with these key requirements:
-- **DP-601**: Real-Time Driver Monitoring (camera-based gaze tracking)
-- **DP-602**: Adaptive Speed Limiting (maps, weather, traffic integration)  
-- **DP-603**: OTA Update Support (secure updates with rollback)
-- **DP-604**: Enhanced Obstacle Detection (sensor fusion)
-- **DP-605**: Regulatory Mode Switching (geofencing compliance)
+Based on `content/transcript.md`, the CarPort SDK implements simulation capabilities for Drive Pilot autonomous vehicle features:
+- **DP-601**: Real-Time Driver Monitoring (camera-based gaze tracking simulation)
+- **DP-602**: Adaptive Speed Limiting (maps, weather, traffic integration simulation)  
+- **DP-603**: OTA Update Support (secure updates with rollback simulation)
+- **DP-604**: Enhanced Obstacle Detection (sensor fusion simulation)
+- **DP-605**: Regulatory Mode Switching (geofencing compliance simulation)
 
 ### Common Operations
 
-#### View Repository Contents
+#### Setup Development Environment
 ```bash
-# List all files (VALIDATED - works immediately)
-ls -la
+# Create virtual environment (RECOMMENDED)
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# View transcript content (VALIDATED - works immediately)  
-cat content/transcript.md
+# Install dependencies
+pip install -r requirements.txt
+
+# Install SDK in development mode
+pip install -e .
 ```
 
-#### Edit Documentation
+#### Running Tests
 ```bash
-# Edit transcript file (VALIDATED - no build required)
-# Use any text editor like nano, vim, or IDE
-nano content/transcript.md
+# Run all tests
+pytest
+
+# Run specific test module
+pytest tests/test_driver_monitoring.py
+
+# Run with coverage
+pytest --cov=carport_sdk tests/
 ```
 
-#### Git Operations
+#### Using the SDK
 ```bash
-# Check repository status (VALIDATED - works immediately)
-git status
+# Run example simulations
+python examples/basic_simulation.py
 
-# View commit history (VALIDATED - works immediately)
-git log --oneline
-
-# View branches (VALIDATED - works immediately) 
-git branch -a
+# Import in Python code
+from carport_sdk import CarPortSimulator
 ```
 
 ## Validation
 
-### NO BUILD OR TEST COMMANDS
-- **There are no build commands** - repository contains only documentation
-- **There are no test suites** - no automated testing infrastructure
-- **There are no linting tools** - standard markdown formatting sufficient
-- **There are no dependencies to install** - pure documentation repository
+### Build and Test Commands
+- **pip install -e .**: Install SDK in development mode
+- **pytest**: Run the full test suite  
+- **pytest --cov=carport_sdk**: Run tests with coverage reporting
+- **python -m flake8 carport_sdk/**: Code style linting
+- **python -m mypy carport_sdk/**: Type checking (if configured)
 
-### Manual Validation Steps
-When making changes to documentation:
-1. **READ TRANSCRIPT**: Always review `content/transcript.md` to understand project context
-2. **MARKDOWN VALIDATION**: Ensure markdown syntax is correct by previewing files
-3. **CONTENT CONSISTENCY**: Verify any new content aligns with existing Drive Pilot project information
-4. **GIT STATUS**: Always run `git status` to see what files have been modified
+### Development Workflow
+When making changes to the SDK:
+1. **SETUP ENVIRONMENT**: Create virtual environment and install dependencies
+2. **RUN EXISTING TESTS**: Ensure current functionality works (`pytest`)
+3. **IMPLEMENT CHANGES**: Make surgical modifications to SDK code
+4. **ADD/UPDATE TESTS**: Write tests for new functionality
+5. **VALIDATE**: Run tests and linting to ensure quality
+6. **DOCUMENTATION**: Update docstrings and README as needed
 
 ### Expected Timings
-- **Repository clone**: < 5 seconds (minimal content)
-- **File viewing/editing**: Instant (no compilation required)
-- **Git operations**: < 2 seconds (small repository size)
+- **Environment setup**: 30-60 seconds (dependency installation)
+- **Test suite execution**: 5-30 seconds (depending on scope)
+- **SDK import/usage**: &lt; 1 second (lightweight simulator)
 
 ## Project Context
 
-### Drive Pilot Features (from transcript.md)
-The repository documents an automotive autonomous driving system with these components:
-- **Driver Monitoring**: Camera-based gaze tracking with 5-second alert threshold
-- **Speed Control**: Dynamic speed limiting based on environmental conditions
-- **Update System**: Secure OTA updates with rollback capability  
-- **Obstacle Detection**: Multi-sensor fusion (IR, radar, ultrasonic)
-- **Regulatory Compliance**: GPS-based geofencing for regional requirements
+### CarPort SDK Features (implementing Drive Pilot requirements)
+The SDK provides simulation capabilities for automotive autonomous driving systems:
+- **Driver Monitoring**: Simulated camera-based gaze tracking with configurable alert thresholds
+- **Speed Control**: Virtual speed limiting simulation based on environmental conditions
+- **Update System**: Mock OTA update system with rollback simulation
+- **Obstacle Detection**: Simulated multi-sensor fusion (IR, radar, ultrasonic)
+- **Regulatory Compliance**: Virtual GPS-based geofencing for testing regional requirements
 
-### Team Roles (from transcript.md)
-- **Sherry**: Project Manager
-- **Fu**: Requirements Engineer  
-- **Tanvi**: Software Engineer
-- **Dennis**: Test Engineer
-- **Pavan**: Homologation Engineer
+### SDK Architecture
+- **Core Simulator**: Main simulation engine and state management
+- **Feature Modules**: Individual simulators for each Drive Pilot feature
+- **Event System**: Publisher-subscriber pattern for component communication
+- **Data Models**: Standardized data structures for sensor data, vehicle state, etc.
+- **Testing Framework**: Comprehensive test coverage for all simulation components
 
 ## Important Notes
 
 ### What This Repository IS:
-- Documentation and meeting transcripts for Drive Pilot project
-- Reference material for automotive autonomous driving requirements
-- Project planning and technical discussion records
+- **Python SDK**: CarPort automotive simulator for testing autonomous driving features
+- **Development Framework**: Tools and APIs for creating automotive test scenarios
+- **Reference Implementation**: Simulated versions of real Drive Pilot features
+- **Testing Platform**: Comprehensive test suite for validation and verification
 
 ### What This Repository IS NOT:
-- **NOT a source code repository** - contains no implementation
-- **NOT a build environment** - no compilation or build processes
-- **NOT a test suite** - no automated testing infrastructure  
-- **NOT a deployment system** - no runtime or execution environment
+- **NOT production automotive software** - this is a simulator/testing tool
+- **NOT a real-time system** - simulated timing and responses
+- **NOT hardware-dependent** - pure software simulation
+- **NOT safety-critical** - intended for development and testing only
 
 ### Working with Changes
-- Changes are limited to documentation updates
-- No code compilation, testing, or deployment required
-- Focus on maintaining accurate project documentation
-- Ensure consistency with automotive industry standards referenced in transcripts
+- Follow Python development best practices (PEP 8, type hints, docstrings)
+- Maintain comprehensive test coverage for all new features
+- Update documentation when adding new simulation capabilities
+- Ensure backwards compatibility when modifying existing APIs
+- Reference the original Drive Pilot requirements in `content/transcript.md`
 
 ## Quick Reference Commands
 
 ```bash
-# Essential commands that work immediately:
-pwd                     # Current directory
-ls -la                  # List all files  
-cat content/transcript.md  # View main content
-git status              # Check repository state
-git log --oneline       # View commit history
+# Essential development commands:
+python --version           # Check Python version (3.8+ required)
+python -m venv venv       # Create virtual environment
+source venv/bin/activate  # Activate environment (Linux/Mac)
+pip install -r requirements.txt  # Install dependencies
+pip install -e .          # Install SDK in development mode
+pytest                    # Run test suite
+python examples/basic_simulation.py  # Run example
+git status                # Check repository state
 ```
 
-**Remember**: This is a documentation-only repository. Do not expect or attempt to find source code, build scripts, test suites, or runtime environments.
+## CarPort SDK Quick Start
+
+```python
+# Basic usage example:
+from carport_sdk import CarPortSimulator
+
+# Create simulator instance
+simulator = CarPortSimulator()
+
+# Configure driver monitoring
+simulator.driver_monitoring.set_alert_threshold(5.0)  # 5 second threshold
+
+# Start simulation
+simulator.start()
+
+# Simulate driver looking away
+simulator.driver_monitoring.simulate_gaze_away(6.0)  # 6 seconds
+
+# Check for alerts
+alerts = simulator.get_alerts()
+```
+
+**Remember**: This is a Python SDK for automotive simulation. Use virtual environments, run tests frequently, and maintain comprehensive test coverage.
