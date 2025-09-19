@@ -171,9 +171,11 @@ class SimulationEnvironment:
         old_conditions = self._weather_conditions.copy()
         self._weather_conditions.update(conditions)
         
+        # Use current time if simulation not running
+        timestamp = self.get_simulation_time() if self._running else time.time()
         self.publish_event(Event(
             event_type=EventType.WEATHER_CHANGE,
-            timestamp=self.get_simulation_time(),
+            timestamp=timestamp,
             data={
                 "old_conditions": old_conditions,
                 "new_conditions": self._weather_conditions.copy()
@@ -207,9 +209,11 @@ class SimulationEnvironment:
         
         if new_region != old_region:
             self._current_region = new_region
+            # Use current time if simulation not running
+            timestamp = self.get_simulation_time() if self._running else time.time()
             self.publish_event(Event(
                 event_type=EventType.REGION_CHANGED,
-                timestamp=self.get_simulation_time(),
+                timestamp=timestamp,
                 data={
                     "old_region": old_region,
                     "new_region": new_region,

@@ -102,6 +102,13 @@ class Car:
         # Internal timers and state
         self._last_attention_check = time.time()
         self._last_speed_update = time.time()
+    
+    def _get_timestamp(self) -> float:
+        """Get current timestamp, using simulation time if available."""
+        if self.environment.is_running():
+            return self.environment.get_simulation_time()
+        else:
+            return time.time()
         
     def _subscribe_to_environment_events(self) -> None:
         """Subscribe to relevant environment events."""
@@ -124,7 +131,7 @@ class Car:
             
         self.environment.publish_event(Event(
             event_type=EventType.VEHICLE_STATE_CHANGED,
-            timestamp=self.environment.get_simulation_time(),
+            timestamp=self._get_timestamp(),
             data={
                 "feature": "driver_monitoring",
                 "enabled": True,
@@ -145,7 +152,7 @@ class Car:
         if not self._driver_monitoring_enabled:
             return
             
-        current_time = self.environment.get_simulation_time()
+        current_time = self._get_timestamp()
         
         with self._lock:
             if is_attentive:
@@ -171,7 +178,7 @@ class Car:
     
     def _escalate_driver_alerts(self) -> None:
         """Escalate driver alerts based on attention time (TC-601.1)."""
-        current_time = self.environment.get_simulation_time()
+        current_time = self._get_timestamp()
         attention_time = self.status.attention_time
         
         if attention_time > self._driver_attention_threshold * 3:
@@ -229,7 +236,7 @@ class Car:
         
         self.environment.publish_event(Event(
             event_type=EventType.SPEED_ZONE_ENTERED,
-            timestamp=self.environment.get_simulation_time(),
+            timestamp=self._get_timestamp(),
             data={
                 "car_id": self.car_id,
                 "old_limit": old_limit,
@@ -244,7 +251,7 @@ class Car:
             return
             
         self.status.target_speed = target_speed
-        current_time = self.environment.get_simulation_time()
+        current_time = self._get_timestamp()
         
         # Apply weather factor
         adjusted_target = target_speed * self.status.weather_factor
@@ -318,7 +325,7 @@ class Car:
         if not self._ota_updates_enabled:
             return False
             
-        current_time = self.environment.get_simulation_time()
+        current_time = self._get_timestamp()
         
         # TC-603.1 & TC-603.2: Update validation
         if not is_valid:
@@ -405,7 +412,7 @@ class Car:
         if not self._obstacle_detection_enabled:
             return
             
-        current_time = self.environment.get_simulation_time()
+        current_time = self._get_timestamp()
         
         obstacle = {
             "type": obstacle_type,
@@ -448,7 +455,7 @@ class Car:
     
     def emergency_stop(self) -> None:
         """Perform emergency stop."""
-        current_time = self.environment.get_simulation_time()
+        current_time = self._get_timestamp()
         
         with self._lock:
             old_state = self.status.state
@@ -500,7 +507,7 @@ class Car:
             
             self.environment.publish_event(Event(
                 event_type=EventType.COMPLIANCE_MODE_CHANGED,
-                timestamp=self.environment.get_simulation_time(),
+                timestamp=self._get_timestamp(),
                 data={
                     "car_id": self.car_id,
                     "old_region": old_region,
@@ -540,7 +547,7 @@ class Car:
                 # TC-605.2: Block disallowed feature
                 self.environment.publish_event(Event(
                     event_type=EventType.FEATURE_BLOCKED,
-                    timestamp=self.environment.get_simulation_time(),
+                    timestamp=self._get_timestamp(),
                     data={
                         "car_id": self.car_id,
                         "feature": feature,
